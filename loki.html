@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will you go on a date with me?</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,700;1,500&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #FFF6F4 0%, #FFEBE5 100%);
+            font-family: 'Poppins', sans-serif;
+            overflow: hidden;
+        }
+
+        /* Premium Card Container */
+        .card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border-radius: 28px;
+            padding: 50px 40px;
+            box-shadow: 0 15px 50px rgba(230, 154, 156, 0.18);
+            text-align: center;
+            max-width: 520px;
+            width: 90%;
+            border: 1.5px solid rgba(255, 213, 218, 0.6);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        /* Cute Illustration */
+        .image-container {
+            width: 140px;
+            height: 140px;
+            margin-bottom: 20px;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: saturate(1.1) brightness(1.02);
+        }
+
+        /* Elegant Title */
+        .main-question {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.3rem;
+            font-weight: 700;
+            color: #5C4D5D;
+            margin: 15px 0 40px 0;
+            letter-spacing: 0.5px;
+        }
+
+        /* Buttons Container */
+        .buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            min-height: 80px;
+            width: 100%;
+            position: relative;
+        }
+
+        /* Yes Button */
+        .btn-yes {
+            background: linear-gradient(135deg, #FFB7B2 0%, #FF9AA2 100%);
+            color: #fff;
+            border: none;
+            padding: 14px 38px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 6px 22px rgba(255, 154, 162, 0.45);
+            transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.25s, font-size 0.3s, padding 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-yes:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 28px rgba(255, 154, 162, 0.6);
+        }
+
+        /* No Button */
+        .btn-no {
+            background: #FFFFFF;
+            color: #8C8290;
+            border: 1px solid #E5D5DA;
+            padding: 10px 24px;
+            border-radius: 50px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+            transition: background 0.2s, color 0.2s, transform 0.1s;
+        }
+
+        .btn-no:hover {
+            background: #F4EBEF;
+            color: #6B5B95;
+        }
+
+        /* Success screen styling */
+        .success-container {
+            text-align: center;
+            padding: 30px 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .success-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.6rem;
+            color: #B56576;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .success-sub {
+            font-size: 1.3rem;
+            color: #6C5B7B;
+            margin-top: 5px;
+        }
+
+        .success-img {
+            width: 150px;
+            height: 150px;
+            margin-bottom: 25px;
+            object-fit: contain;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card" id="card">
+        <div class="image-container">
+            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3czYW94Z3ZuaDh5OXkyNzh4NWR3d2g0NTNqdzd1amR4bnk4ZzJtYyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/2vql5B7vdc8r2/giphy.gif" alt="Cute Bear Illustration">
+        </div>
+        
+        <div class="main-question">Will you go on a date with me?</div>
+        
+        <div class="buttons">
+            <button class="btn-yes" id="yesBtn" onclick="ansYes()">Yes!</button>
+            <button class="btn-no" id="noBtn" onclick="moveNoButton()" onmouseover="moveNoButton()">No</button>
+        </div>
+    </div>
+
+    <script>
+        let yesFontSize = 1.2;
+        let yesPaddingV = 14;
+        let yesPaddingH = 38;
+
+        function moveNoButton() {
+            const noBtn = document.getElementById('noBtn');
+            
+            // Switch to fixed to allow the button to jump around the entire screen
+            noBtn.style.position = 'fixed';
+            
+            // Calculate random bounds
+            const maxX = window.innerWidth - noBtn.offsetWidth - 30;
+            const maxY = window.innerHeight - noBtn.offsetHeight - 30;
+            
+            const randomX = Math.max(20, Math.random() * maxX);
+            const randomY = Math.max(20, Math.random() * maxY);
+            
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
+            
+            // Make "Yes" button bigger
+            yesFontSize += 0.15;
+            yesPaddingV += 3;
+            yesPaddingH += 6;
+            
+            const yesBtn = document.getElementById('yesBtn');
+            yesBtn.style.fontSize = yesFontSize + 'rem';
+            yesBtn.style.padding = yesPaddingV + 'px ' + yesPaddingH + 'px';
+        }
+
+        function ansYes() {
+            const card = document.getElementById('card');
+            
+            // Replace the card content with the final message
+            card.innerHTML = `
+                <div class="success-container">
+                    <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueGZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1z/3ohzdIuqJoo8QdKfe0/giphy.gif" alt="Cute Celebration" class="success-img">
+                    <div class="success-title">Jaan kar khushi hui</div>
+                    <div class="success-sub">See you soon ❤️</div>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
